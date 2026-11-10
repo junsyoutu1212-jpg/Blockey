@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b13">
+<title>ARCADE // TEADING</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+:root {
+  --bg:#080b13;
+  --green:#8dffbf;
+  --cyan:#65e8ff;
+  --purple:#a98bff;
+  --white:#eef8f4;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--white);
+  font-family:'Noto Sans KR',sans-serif;overflow-x:hidden;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:
+  linear-gradient(rgba(105,255,192,.035) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(105,255,192,.035) 1px,transparent 1px);
+  background-size:42px 42px;z-index:-2;
+}
+body:after{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 0%,rgba(47,255,155,.13),transparent 45%),
+  radial-gradient(ellipse at 90% 55%,rgba(122,91,255,.12),transparent 38%);
+  z-index:-1;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.wrap{width:min(1160px,calc(100% - 40px));margin:auto}
+.topbar{
+  height:76px;display:flex;align-items:center;
+  justify-content:space-between;border-bottom:1px solid #ffffff12;
+}
+.brand{
+  display:flex;align-items:center;gap:12px;
+  font-family:Orbitron,sans-serif;font-weight:900;
+  letter-spacing:.1em;font-size:13px;
+}
+.logo{
+  width:36px;height:36px;border:1px solid var(--green);
+  border-radius:10px;display:grid;place-items:center;
+  color:var(--green);font-size:20px;
+  box-shadow:0 0 22px #8dffbf30;
+}
+.brand small{
+  display:block;color:#718394;font-size:8px;
+  letter-spacing:.2em;margin-top:5px;
+}
+.nav{display:flex;align-items:center;gap:27px;color:#9aa9b7;font-size:12px}
+.nav a:hover{color:var(--green)}
+.status{display:flex;align-items:center;gap:8px;color:#a9f7c6;font-size:10px}
+.dot{
+  width:7px;height:7px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 12px var(--green);animation:pulse 1.6s infinite;
+}
+@keyframes pulse{50%{opacity:.3}}
+.hero{
+  min-height:650px;display:grid;
+  grid-template-columns:1.05fr .95fr;
+  align-items:center;gap:42px;padding:70px 0;
+}
+.eyebrow{
+  color:var(--green);font-size:11px;
+  letter-spacing:.23em;font-weight:800;
+  font-family:Orbitron,sans-serif;
+}
+.eyebrow:before{
+  content:"";display:inline-block;width:28px;height:1px;
+  background:var(--green);vertical-align:middle;margin-right:10px;
+}
+h1{
+  font-family:Orbitron,'Noto Sans KR',sans-serif;
+  font-size:clamp(48px,7vw,86px);line-height:1.04;
+  letter-spacing:-.07em;margin:25px 0 20px;font-weight:900;
+}
+.glow{
+  color:var(--green);
+  text-shadow:0 0 35px #8dffbf55;
+}
+.lead{color:#9eacba;font-size:14px;line-height:2}
+.actions{display:flex;gap:13px;flex-wrap:wrap;margin-top:32px}
+.btn{
+  border:1px solid #8dffbf30;border-radius:11px;
+  padding:15px 21px;display:inline-flex;align-items:center;
+  gap:12px;font-weight:800;font-size:13px;transition:.25s;
+}
+.primary{
+  background:var(--green);color:#07110c;
+  border-color:var(--green);
+  box-shadow:0 8px 35px #8dffbf30;
+}
+.primary:hover{transform:translateY(-4px);box-shadow:0 12px 42px #8dffbf55}
+.ghost{background:#ffffff08;color:#d5e2dc}
+.ghost:hover{border-color:var(--green);color:var(--green);transform:translateY(-4px)}
+.meta{display:flex;gap:25px;margin-top:38px;color:#718394;font-size:9px;letter-spacing:.12em}
+.meta b{display:block;color:#d7e5df;font-size:12px;margin-top:6px;letter-spacing:0}
+.visual{position:relative;min-height:440px;display:grid;place-items:center}
+.orbit{
+  position:absolute;width:min(440px,95%);aspect-ratio:1;
+  border:1px solid #8dffbf25;border-radius:50%;
+  animation:spin 28s linear infinite;
+}
+.orbit:before,.orbit:after{
+  content:"";position:absolute;border:1px dashed #65e8ff35;
+  border-radius:50%;inset:30px;
+}
+.orbit:after{inset:70px;border-color:#a98bff40}
+@keyframes spin{to{transform:rotate(360deg)}}
+.arcade{
+  width:min(390px,92%);position:relative;z-index:1;padding:13px;
+  border:1px solid #8dffbf55;border-radius:22px;
+  background:linear-gradient(145deg,#15252ff5,#0a0f1bf5);
+  box-shadow:0 30px 90px #0009,0 0 55px #4bffaa18;
+  transform:perspective(900px) rotateY(-8deg) rotateX(3deg);
+  animation:float 5s ease-in-out infinite;
+}
+@keyframes float{
+  50%{transform:perspective(900px) rotateY(-5deg) rotateX(1deg) translateY(-12px)}
+}
+.screen{
+  height:260px;border-radius:13px;
+  background:radial-gradient(circle at 50% 50%,#163c35,#081510 72%);
+  border:1px solid #8dffbf40;position:relative;overflow:hidden;
+  display:grid;place-items:center;
+}
+.screen:before{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent 0 3px,#0003 4px);
+}
+.screen-label{
+  position:absolute;top:15px;left:17px;color:#8dffbf;
+  font:10px monospace;letter-spacing:.2em;
+}
+.pixel-title{
+  font-family:Orbitron,sans-serif;font-weight:900;
+  text-align:center;font-size:35px;line-height:1.1;
+  color:#e9fff1;text-shadow:0 0 10px #8dffbf,0 0 35px #8dffbf88;
+  z-index:1;
+}
+.pixel-title span{
+  display:block;color:var(--green);font-size:10px;
+  letter-spacing:.25em;margin-top:14px;
+}
+.pixel{
+  position:absolute;width:18px;height:18px;
+  background:var(--green);box-shadow:0 0 18px var(--green);
+  animation:blink 1.3s steps(2) infinite;
+}
+.p1{left:16%;top:28%}
+.p2{right:17%;top:34%;background:var(--purple);box-shadow:0 0 18px var(--purple);animation-delay:.4s}
+.p3{left:25%;bottom:20%;width:9px;height:9px;background:var(--cyan);box-shadow:0 0 15px var(--cyan)}
+@keyframes blink{50%{opacity:.15}}
+.machine-base{
+  height:80px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 18px;
+  color:#718b80;font:10px monospace;letter-spacing:.12em;
+}
+.machine-base strong{color:var(--green);font-size:12px}
+.machine-dots{display:flex;gap:7px}
+.machine-dots i{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 9px var(--green);
+}
+.float-tag{
+  position:absolute;z-index:2;padding:10px 13px;
+  border:1px solid #65e8ff40;border-radius:9px;
+  background:#09111bdd;color:var(--cyan);
+  font:10px monospace;letter-spacing:.12em;
+}
+.tag-a{top:45px;right:0}
+.tag-b{bottom:50px;left:0;color:var(--purple);border-color:#a98bff55}
+.section-head{
+  display:flex;justify-content:space-between;
+  align-items:end;margin:20px 0 22px;
+}
+.kicker{font:800 10px Orbitron;color:var(--green);letter-spacing:.2em}
+h2{font-size:26px;letter-spacing:-.05em;margin:8px 0 0}
+.section-head p{color:#788a99;font-size:11px}
+.cards{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:13px;margin-bottom:90px;
+}
+.card{
+  min-height:170px;border:1px solid #ffffff15;
+  border-radius:15px;padding:20px;
+  background:linear-gradient(145deg,#121d2bd9,#0a0f19e8);
+  transition:.25s;position:relative;overflow:hidden;
+}
+.card:hover{transform:translateY(-6px);border-color:#8dffbf70}
+.card:after{
+  content:"";position:absolute;width:100px;height:100px;
+  right:-45px;bottom:-55px;border-radius:50%;
+  background:var(--accent);filter:blur(50px);opacity:.2;
+}
+.num{font:10px monospace;color:#607486;letter-spacing:.15em}
+.icon{font-size:25px;margin:19px 0 11px}
+.card h3{font-size:14px;margin:0 0 7px}
+.card p{font-size:11px;color:#8292a1;line-height:1.7;margin:0}
+.bottom{
+  border-top:1px solid #ffffff12;padding:24px 0 34px;
+  display:flex;justify-content:space-between;gap:15px;
+  color:#607080;font-size:10px;letter-spacing:.08em;
+}
+.bottom a{color:#a4b5ae}
+.bottom a:hover{color:var(--green)}
+@media(max-width:800px){
+  .hero{grid-template-columns:1fr;padding:60px 0 35px;gap:15px}
+  .visual{min-height:390px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .nav{gap:13px}
+  .nav a:not(:last-child){display:none}
+}
+@media(max-width:480px){
+  .wrap{width:calc(100% - 28px)}
+  .topbar{height:65px}
+  .hero{padding-top:48px}
+  h1{font-size:51px}
+  .lead{font-size:13px}
+  .visual{min-height:330px}
+  .screen{height:220px}
+  .arcade{width:88%}
+  .pixel-title{font-size:29px}
+  .cards{gap:9px}
+  .card{padding:15px;min-height:160px}
+  .section-head p{display:none}
+  .bottom{flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar">
+  <a class="brand" href="#">
+    <span class="logo">✳</span>
+    <span>ARCADE / TEADING<small>CREATIVE CODING PORTAL</small></span>
+  </a>
+  <nav class="nav">
+    <a href="#features">FEATURES</a>
+    <a href="https://codingteading.com/ko/arcade-teading/" target="_blank">ABOUT</a>
+    <span class="status"><i class="dot"></i> SYSTEM READY</span>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div>
+    <div class="eyebrow">NEXT LEVEL · CREATIVE CODING</div>
+    <h1>MAKE YOUR<br><span class="glow">OWN GAME.</span></h1>
+    <p class="lead">
+      상상한 게임을 직접 만들어 봐.<br>
+      블록을 연결하고, 코드를 바꾸고, 네가 만든 세계를 플레이해.<br>
+      코딩은 이제 게임이 된다.
+    </p>
+    <div class="actions">
+      <a class="btn primary" href="https://arcade.codingteading.com/" target="_blank">
+        아케이드 시작하기 <span>↗</span>
+      </a>
+      <a class="btn ghost" href="#features">
+        기능 둘러보기 <span>↓</span>
+      </a>
+    </div>
+    <div class="meta">
+      <div>PLATFORM<b>WEB / BROWSER</b></div>
+      <div>ACCESS<b>FREE TO PLAY</b></div>
+      <div>LEVEL<b>BEGINNER → PRO</b></div>
+    </div>
+  </div>
+
+  <div class="visual">
+    <div class="orbit"></div>
+    <div class="float-tag tag-a">01 // BUILD MODE</div>
+    <div class="float-tag tag-b">PIXEL WORLD_</div>
+    <div class="arcade">
+      <div class="screen">
+        <div class="screen-label">TEADING ARCADE · 2026</div>
+        <i class="pixel p1"></i>
+        <i class="pixel p2"></i>
+        <i class="pixel p3"></i>
+        <div class="pixel-title">
+          CREATE.<br>PLAY.<br>REPEAT.
+          <span>PRESS START TO BEGIN</span>
+        </div>
+      </div>
+      <div class="machine-base">
+        <strong>▰ TEADING</strong>
+        <span>INSERT YOUR IDEAS</span>
+        <span class="machine-dots"><i></i><i></i><i></i></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="section-head">
+    <div>
+      <div class="kicker">EXPLORE THE SYSTEM</div>
+      <h2>네가 만들 수 있는 것들</h2>
+    </div>
+    <p>YOUR IDEAS. YOUR RULES.</p>
+  </div>
+
+  <div class="cards">
+    <article class="card" style="--accent:#8dffbf">
+      <div class="num">MODULE / 01</div>
+      <div class="icon">🧩</div>
+      <h3>블록 코딩</h3>
+      <p>블록을 이어 붙여 게임의 규칙과 동작을 설계해.</p>
+    </article>
+    <article class="card" style="--accent:#65e8ff">
+      <div class="num">MODULE / 02</div>
+      <div class="icon">⌘</div>
+      <h3>JavaScript 전환</h3>
+      <p>블록에서 텍스트 코드로. 코딩을 더 확장해.</p>
+    </article>
+    <article class="card" style="--accent:#a98bff">
+      <div class="num">MODULE / 03</div>
+      <div class="icon">🗺️</div>
+      <h3>튜토리얼 & 스킬맵</h3>
+      <p>단계별 미션을 따라가며 새로운 기술을 배워 봐.</p>
+    </article>
+    <article class="card" style="--accent:#ffbd75">
+      <div class="num">MODULE / 04</div>
+      <div class="icon">🚀</div>
+      <h3>공유 & 플레이</h3>
+      <p>작품을 공유하고 다른 사람이 만든 게임도 즐겨 봐.</p>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer class="bottom">
+  <span>© 2026 ARCADE / TEADING LAUNCHER</span>
+  <span>
+    <a href="https://codingteading.com/ko/arcade-teading/" target="_blank">원본 서비스 소개</a>
+    ·
+    <a href="https://arcade.codingteading.com/" target="_blank">공식 아케이드 열기 ↗</a>
+  </span>
+</footer>
+</div>
+
+<script>
+// 배경 별빛 효과
+const canvas=document.createElement('canvas');
+canvas.style.cssText='position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none';
+document.body.prepend(canvas);
+const ctx=canvas.getContext('2d');
+let w,h,stars=[];
+function resize(){
+  w=canvas.width=innerWidth*devicePixelRatio;
+  h=canvas.height=innerHeight*devicePixelRatio;
+  stars=Array.from({length:Math.min(100,Math.floor(innerWidth/12))},()=>({
+    x:Math.random()*w,y:Math.random()*h,
+    r:Math.random()*1.5+.3,s:Math.random()*.22+.06,
+    a:Math.random()*.6+.15
+  }));
+}
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  for(const p of stars){
+    p.y-=p.s*devicePixelRatio;
+    if(p.y<0){p.y=h;p.x=Math.random()*w}
+    ctx.globalAlpha=p.a;
+    ctx.fillStyle='#9dffd0';
+    ctx.fillRect(p.x,p.y,p.r*devicePixelRatio,p.r*devicePixelRatio);
+  }
+  ctx.globalAlpha=1;
+  requestAnimationFrame(draw);
+}
+resize();
+addEventListener('resize',resize);
+draw();
+</script>
+</body>
+</html>
